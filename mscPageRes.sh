@@ -1,9 +1,10 @@
 # Resize MuseScore pages in the current folder to fit the screen blank.
+# First, go to Format > Style > Header, footer and disable header, to disable page numbers.
 # Author: Luiz Guilherme de Medeiros Ventura
-# v0.1 – for png files exported with 300DPI
-# ToDo: first page has no number and its bottom is being cropped. Check.
+# v0.2 – for png files exported with 300DPI
 
-SCREEN_W=960
+
+SCREEN_W=1920
 SCREEN_H=1080
 
 MARGIN_W=60
@@ -14,19 +15,19 @@ let HEIGHT="$SCREEN_H - $MARGIN_H"
 
 COUNT=0
 
-for i in *.png; do
-    if [ $COUNT -ge 1 ] # if count >= 1 to skip first page, which has no page num
-    then
-        convert "$i" -crop 2481x3300+0+0 "./trim/$i";
-    else
-        cp "$i" "./trim/$i";
-    fi
-    let COUNT="$COUNT + 1"
-done
+#for i in *.png; do
+#    if [ $COUNT -ge 1 ] # if count >= 1 to skip first page, which has no page num
+#    then
+#        convert "$i" -crop 3507x2266+0+215 "./trim/$i"; # for all pages with an index >= 1
+#    else
+#        cp "$i" "./trim/$i"; # for page 1
+#    fi
+#    let COUNT="$COUNT + 1"
+#done
 
 FILES=./trim/*.png
 
-for i in $FILES; do convert "$i" -trim "$i"; done
+for i in *.png; do convert "$i" -trim "./trim/$i"; done
 
 # This could be used (and still had to be extended to account for fitting the width as well) if the resize were so implemented, that it would fill the box. (there is actually a way to force it to do that, using a flag)
 #for i in $FILES; do
